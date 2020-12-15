@@ -12,9 +12,14 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
 //TESTAR SE O LINK ESTÁ FUNCIONANDO
-app.get("/", (req, res) => {
-    res.send("Oi");
-});
+// app.get("/", (req, res) => {
+//     res.send("Oi");
+// });
+
+//REFERENCIAR A AUTENTICAÇÃO AQUI 
+//VOU PASSAR O (app) PARA DENTRO DA AUTENTICAÇAO
+//(app) SÓ PODE SER DEFINIDO UMA VEZ 
+require("./controllers/AutenticacaoController")(app);
 
 //QUAL PORTA O APLICATIVO VAI ESCUTAR 
 app.listen(3000);

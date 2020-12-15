@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("../database/banco");
 
 const UsuarioSchema = new mongoose.Schema({
     nome: {
@@ -7,21 +7,24 @@ const UsuarioSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        unique: true,
         required: true,
+        unique: true,
         lowercase: true
     },
     senha: {
-        type: DOMStringList,
+        type: String,
         required: true,
         select: false
     },
     data: {
         type: Date,
-        default: Date.now
+        default: Date.now,//DATA ATUAL QUE O REGISTRO FOI CRIADO 
     },
-});
+})
 
 //REGISTRAR O MODEL NA APLICAÇÃO COM A BASE DE DADOS
 //TODA A APLICAÇÃO VAI SABER QUE EXISTE UM MODEL QUE POSSUI ESTAS PROPRIEDADES AQUI 
-mongoose.model('Usuario', UsuarioSchema);
+const Usuario = mongoose.model('Usuario', UsuarioSchema);
+
+//EXPORTAR PARA FORA DESTA CLASS
+module.exports = Usuario;
