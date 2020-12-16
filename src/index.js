@@ -20,6 +20,7 @@ app.use(body_parser.urlencoded({ extended: false }));
 //VOU PASSAR O (app) PARA DENTRO DA AUTENTICAÇAO
 //(app) SÓ PODE SER DEFINIDO UMA VEZ E VAI PARA TODOS OS OUTROS ARQUIVOS
 require("./controllers/AutenticacaoController")(app);
+require("./controllers/ProjetoController")(app);
 
 //QUAL PORTA O APLICATIVO VAI ESCUTAR 
 app.listen(3000);
