@@ -15,7 +15,7 @@ const UsuarioSchema = new mongoose.Schema({
     senha: {
         type: String,
         required: true,
-        select: false
+        select: false //QUANDO EU BUSCAR UM USUÁRIO A SENHA NÃO VEM
     },
     data: {
         type: Date,

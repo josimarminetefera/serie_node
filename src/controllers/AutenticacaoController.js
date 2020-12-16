@@ -1,4 +1,5 @@
 const express = require("express");
+const bcryptjs = require("bcryptjs");
 
 //BUSCAR A CLASS USUARIO
 const Usuario = require("../models/Usuario");
@@ -24,6 +25,31 @@ rota.post("/registrar", async (req, res) => {
     } catch (erro) {
         return res.status(400).send({ error: "Erro ao registrar." });
     }
+});
+
+rota.post('/autenticar', async (req, res) => {
+    //VOU RECEBER ESTAS DUAS VARIAVEIS PARA LOGIN
+    const { email, senha } = req.body;
+
+    // PARA BUSCAR UM CAMPO QUE NÃO APARECE NO OBJECT .select('+senha')
+    const usuario = await Usuario.findOne({ email }).select('+senha');
+
+    if (usuario) {
+        //VERIFICAR SE A SENHA É A MESMA CADASTRADA
+        if (await bcryptjs.compare(senha, usuario.senha)) {
+            
+            //APAGA A SENHA ASSIM QUE O USUÁRIO FOR CRIADO
+            usuario.senha = undefined;
+
+            res.send({ usuario });
+        } else {
+            res.status(400).send({ erro: "Senha inválida." })
+        }
+    } else {
+        res.status(400).send({ erro: "Usuário não encontrado." })
+    }
+
+
 });
 
 //PARA RECUPERAR O (app) PASSADO LA NO INDEX
