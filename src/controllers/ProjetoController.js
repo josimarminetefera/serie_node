@@ -9,7 +9,8 @@ const rota = express.Router();
 rota.use(autenticacao_middleware);
 
 rota.get("/", (req, res) => {
-    res.send({ ok: true });
+    //ESTE req.userId É LA DO MIDDLEWARE 
+    res.send({ ok: true, usuario: req.idUsuario });
 });
 
 //PARA RECUPERAR O (app) PASSADO LA NO INDEX
