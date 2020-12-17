@@ -3,6 +3,7 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 //IMPORTAR JSON DE CONFIGURACAO
 const autenticacao_configuracao = require("../../configs/autenticacao.json");
+const crypto = require("crypto");
 
 //BUSCAR A CLASS USUARIO
 const Usuario = require("../models/Usuario");
@@ -64,6 +65,26 @@ rota.post('/autenticar', async (req, res) => {
         }
     } else {
         res.status(400).send({ erro: "Usuário não encontrado." })
+    }
+});
+
+//ESQUECI MINHA SENHA
+rota.post("esqueci_minha_senha", async (req, res) => {
+    try {
+        const { email } = req.body;
+        //VERIFICAR SE ESTE EMAIL ESTA CADASTRADO NA NOSSA BASE DE DADOS DE USUÁRIO
+        const usuario = await Usuario.findOne({ email });
+        if (usuario) {
+            //GERAR UM TOKEM PARA ENVIAR PARA O E-MAIL QUE SÓ FUNCIONE PARA ESTE USUÁRIO PARA ESTA REQUISIÇÃO E DENTRO DE UM CERTO TEMPO
+            const token = crypto.randomBytes(20).toString("hex"); //CONVERTO PARA STRING HEX
+            //TEMPO PARA O TOKEM INSPIRAR DAQUI UMA HORA
+            const data_expirar_email = new Date();
+            data_expirar_email.setHours(now.getHours() + 1);
+        } else {
+            res.status(400).send({ erro: "Usuário não encontrado." })
+        }
+    } catch (erro) {
+        return res.status(400).send({ error: "Erro na função esqueci minha senha." })
     }
 });
 
