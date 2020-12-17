@@ -1,6 +1,6 @@
 const jsonwebtoken = require("jsonwebtoken");
 //IMPORTAR JSON DE CONFIGURACAO
-const autenticacao_configuracao = require("../configs/autenticacao.json");
+const autenticacao_configuracao = require("../../configs/autenticacao.json");
 
 //ISSO AQUI SERVE PARA INTERSEPTAR A REQUISIÇÃO PARA NÃO ENTRAR NO CONTROLLER CASO NAO RESPEITE AS REGRAS.
 

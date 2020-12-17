@@ -2,7 +2,7 @@ const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 //IMPORTAR JSON DE CONFIGURACAO
-const autenticacao_configuracao = require("../configs/autenticacao.json");
+const autenticacao_configuracao = require("../../configs/autenticacao.json");
 
 //BUSCAR A CLASS USUARIO
 const Usuario = require("../models/Usuario");
