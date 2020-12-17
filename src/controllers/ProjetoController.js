@@ -1,7 +1,12 @@
 const express = require("express");
+//MIDDLE PARA VALIDAR SE O USUÁRIO ESTÁ AUTENTICADO
+const autenticacao_middleware = require("../middlewares/autenticacao");
 
 //ESTA ROTA AQUI É SÓ PARA PROJETO SÓ USADO AQUI DENTRO
 const rota = express.Router();
+
+//FALO PARA A ROTA PASSAR NO MIDDLE ANTES
+rota.use(autenticacao_middleware);
 
 rota.get("/", (req, res) => {
     res.send({ ok: true });
