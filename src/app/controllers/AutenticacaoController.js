@@ -4,6 +4,7 @@ const jsonwebtoken = require("jsonwebtoken");
 //IMPORTAR JSON DE CONFIGURACAO
 const autenticacao_configuracao = require("../../configs/autenticacao.json");
 const crypto = require("crypto");
+const mailer = require("../../modules/mailer")
 
 //BUSCAR A CLASS USUARIO
 const Usuario = require("../models/Usuario");
@@ -91,9 +92,22 @@ rota.post("/esqueci_minha_senha", async (req, res) => {
                     senhaResetExpira: data_expirar_email
                 }
             });
-
             console.log(token, data_expirar_email);
-
+            console.log("ENVIAR E-MAIL");
+            /*mailer.sendMail({
+                to: email,
+                from: 'josimaminete@gmail.com',
+                template: 'esqueci_minha_senha',
+                context: { token }
+            }, (erro) => {
+                //APOS ENVIAR ELE ENTRA AQUI 
+                if (!erro) {
+                    return res.send();
+                } else {
+                    console.log(erro);
+                    return res.status(400).send({ error: "Não foi possivel enviar o e-mail." });
+                }
+            });*/
         } else {
             res.status(400).send({ erro: "Usuário não encontrado." })
         }
