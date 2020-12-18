@@ -9,6 +9,7 @@ mongoose.connect("mongodb://localhost:27017/noderest", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false
 });
 
 //ENVIAR O MONGOOSE PARA FORA

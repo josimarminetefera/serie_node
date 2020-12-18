@@ -69,17 +69,31 @@ rota.post('/autenticar', async (req, res) => {
 });
 
 //ESQUECI MINHA SENHA
-rota.post("esqueci_minha_senha", async (req, res) => {
+rota.post("/esqueci_minha_senha", async (req, res) => {
+    console.log("esqueci_minha_senha");
     try {
         const { email } = req.body;
-        //VERIFICAR SE ESTE EMAIL ESTA CADASTRADO NA NOSSA BASE DE DADOS DE USUÁRIO
+        console.log("VERIFICAR SE ESTE EMAIL ESTA CADASTRADO NA NOSSA BASE DE DADOS DE USUÁRIO")
         const usuario = await Usuario.findOne({ email });
         if (usuario) {
-            //GERAR UM TOKEM PARA ENVIAR PARA O E-MAIL QUE SÓ FUNCIONE PARA ESTE USUÁRIO PARA ESTA REQUISIÇÃO E DENTRO DE UM CERTO TEMPO
+            console.log("GERAR UM TOKEM PARA ENVIAR PARA O E-MAIL QUE SÓ FUNCIONE PARA ESTE USUÁRIO PARA ESTA REQUISIÇÃO E DENTRO DE UM CERTO TEMPO");
             const token = crypto.randomBytes(20).toString("hex"); //CONVERTO PARA STRING HEX
-            //TEMPO PARA O TOKEM INSPIRAR DAQUI UMA HORA
+
+            console.log("TEMPO PARA O TOKEM INSPIRAR DAQUI UMA HORA");
             const data_expirar_email = new Date();
-            data_expirar_email.setHours(now.getHours() + 1);
+            data_expirar_email.setHours(data_expirar_email.getHours() + 1);
+
+            console.log("ALTERAR O USÁRIO QUE GEREI O TOKEN");
+            await Usuario.findOneAndUpdate({ _id: usuario.id }, {
+                //$setquer dizer quais campo seram alterados
+                $set: {
+                    senhaResetToken: token,
+                    senhaResetExpira: data_expirar_email
+                }
+            });
+
+            console.log(token, data_expirar_email);
+
         } else {
             res.status(400).send({ erro: "Usuário não encontrado." })
         }

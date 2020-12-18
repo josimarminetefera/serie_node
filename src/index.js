@@ -21,7 +21,7 @@ app.use(body_parser.urlencoded({ extended: false }));
 //(app) SÓ PODE SER DEFINIDO UMA VEZ E VAI PARA TODOS OS OUTROS ARQUIVOS
 //require("./controllers/AutenticacaoController")(app);
 //require("./controllers/ProjetoController")(app);
-require("./controllers/index")(app);
+require("./app/controllers/index")(app);
 
 //QUAL PORTA O APLICATIVO VAI ESCUTAR 
 app.listen(3000);
