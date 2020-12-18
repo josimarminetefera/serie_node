@@ -17,6 +17,14 @@ const UsuarioSchema = new mongoose.Schema({
         required: true,
         select: false //QUANDO EU BUSCAR UM USUÁRIO A SENHA NÃO VEM
     },
+    senhaResetToken: {
+        type: String,
+        select: false,
+    },
+    senhaResetExpira: {
+        type: Date,
+        select: false,
+    },
     data: {
         type: Date,
         default: Date.now,//DATA ATUAL QUE O REGISTRO FOI CRIADO 
