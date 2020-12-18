@@ -17,11 +17,11 @@ const UsuarioSchema = new mongoose.Schema({
         required: true,
         select: false //QUANDO EU BUSCAR UM USUÁRIO A SENHA NÃO VEM
     },
-    senhaResetToken: {
+    senhaResetarToken: {
         type: String,
         select: false,
     },
-    senhaResetExpira: {
+    senhaResetarExpira: {
         type: Date,
         select: false,
     },
