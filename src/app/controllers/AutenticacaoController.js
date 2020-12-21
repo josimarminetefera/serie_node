@@ -8,7 +8,7 @@ const mailer = require("../../modules/mailer")
 
 //BUSCAR A CLASS USUARIO
 const Usuario = require("../models/Usuario");
-const { userInfo } = require("os");
+//const { userInfo } = require("os"); não foi eu quem fiz
 
 //ESTA ROTA AQUI É SÓ PARA USUARIO SÓ USADO AQUI DENTRO
 const rota = express.Router();
@@ -85,17 +85,19 @@ rota.post("/esqueci_minha_senha", async (req, res) => {
             const data_expirar_email = new Date();
             data_expirar_email.setHours(data_expirar_email.getHours() + 1);
 
-            console.log("ALTERAR O USÁRIO QUE GEREI O TOKEN");
-            await Usuario.findOneAndUpdate({ _id: usuario.id }, {
-                //$setquer dizer quais campo seram alterados
-                $set: {
-                    senhaResetToken: token,
-                    senhaResetExpira: data_expirar_email
+            console.log("ALTERAR O USÁRIO: " + usuario.id + " QUE GEREI O TOKEN");
+            await Usuario.findByIdAndUpdate(
+                usuario.id,
+                {
+                    $set: {
+                        senhaResetarToken: token,
+                        senhaResetarExpira: data_expirar_email
+                    }
                 }
-            });
+            );
             console.log(token, data_expirar_email);
             console.log("ENVIAR E-MAIL");
-            return res.status(200).send("");
+            return res.send("");
             /*mailer.sendMail({
                 to: email,
                 from: 'josimaminete@gmail.com',
@@ -114,6 +116,7 @@ rota.post("/esqueci_minha_senha", async (req, res) => {
             return res.status(400).send({ erro: "Usuário não encontrado." })
         }
     } catch (erro) {
+        console.log(erro);
         return res.status(400).send({ error: "Erro na função esqueci minha senha." })
     }
 });
@@ -133,7 +136,7 @@ rota.post("/resetar_senha", async (req, res) => {
                     usuario.senha = senha;
                     console.log("SALVAR USUÁRIO")
                     usuario.save();
-                    return res.status(200).send("");
+                    return res.send("");
                 } else {
                     return res.status(400).send({ error: "Tokem expirado, envie novamente." })
                 }
