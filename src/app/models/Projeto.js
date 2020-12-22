@@ -8,12 +8,10 @@ const ProjetoSchema = new mongoose.Schema({
     },
     descricao: {
         type: String,
-        required: true,
     },
     usuario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Usuario",
-        required: true,
     },
     tarefa: [{
         type: mongoose.Schema.Types.ObjectId,

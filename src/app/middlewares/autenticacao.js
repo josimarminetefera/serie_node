@@ -7,7 +7,7 @@ const autenticacao_configuracao = require("../../configs/autenticacao.json");
 //ANTES DE CHAMAR O CONTROLLER ELE PASSA POR AQUI ANTES
 // SÓ CHAMAMOS O next QUANDO PODE SER CARREGADO O CONTROLLER
 module.exports = (req, res, next) => {
-    const autenticacao_header = req.headers.autorizacao;
+    const autenticacao_header = req.headers.authorization; //authorization PODE SER MUDADO O NOME QUE QUIZER POREM QUANDO USA BEARER AI ELE PEGA O NOME PADRÃO
 
     //VERIFICAR SE O TOKEN FOI INFORMADO 
     if (autenticacao_header) {
