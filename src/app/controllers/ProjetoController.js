@@ -55,7 +55,12 @@ rota.put("/:id", async (req, res) => {
 });
 
 rota.delete("/:id", async (req, res) => {
-    return res.send({ ok: true, usuario: req.idUsuario });
+    try {
+        await Projeto.findByIdAndRemove(req.params.id);
+        return res.send();
+    } catch (erro) {
+        return res.status(400).send({ erro: "Erro ao deletar o projeto" })
+    }
 });
 
 //PARA RECUPERAR O (app) PASSADO LA NO INDEX
