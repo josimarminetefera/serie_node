@@ -21,12 +21,18 @@ rota.get("/", async (req, res) => {
         const produtos = await Projeto.find().populate("usuario");
         return res.send({ produtos });
     } catch (erro) {
-        return res.status(400).send({ error: "Erro ao listar os produtos." });
+        return res.status(400).send({ error: "Erro ao listar os projetos." });
     }
 });
 
 rota.get("/:id", async (req, res) => {
-    return res.send({ ok: true, usuario: req.idUsuario });
+    try {
+        //req.params É PARA PEGAR OS PARAMETROS
+        const projeto = await Projeto.findById(req.params.id).populate("usuario");
+        return res.send({ projeto });
+    } catch (erro) {
+        return res.status(400).send({ error: "Erro ao visualizar o projeto" });
+    }
 });
 
 //ROTA PARA CRIAR
