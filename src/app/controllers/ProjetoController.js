@@ -15,8 +15,11 @@ rota.get("/", async (req, res) => {
     //ESTE req.idUsuario É LA DO MIDDLEWARE 
     //return res.send({ ok: true, usuario: req.idUsuario });
     try {
-        const produtos = await Projeto.find();
-        return res.send({produtos});
+        //igerload é quando eu quero trazer o usuário de um projeto
+        //se eu quero trazer o suário de todos projetos fazendo apenas uma consulta tem que usar o populate()
+        //populate("usuario") serve para carregar de todos resultados o usuário
+        const produtos = await Projeto.find().populate("usuario");
+        return res.send({ produtos });
     } catch (erro) {
         return res.status(400).send({ error: "Erro ao listar os produtos." });
     }
@@ -31,7 +34,9 @@ rota.post("/", async (req, res) => {
     try {
         console.log(req.body);
         console.log("CRIAR UM NOVO PROJETO");
-        const projeto = await Projeto.create(req.body);
+        //...req.body INDICA QUE SERÃO ADICIONADOS VÁRIOS PARAMETROS
+        //req.idUsuario vem la do middlewar
+        const projeto = await Projeto.create({ ...req.body, usuario: req.idUsuario });
         return res.send({ projeto });
     } catch (erro) {
         console.log(erro)
