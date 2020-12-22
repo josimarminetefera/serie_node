@@ -8,6 +8,7 @@ const ProjetoSchema = new mongoose.Schema({
     },
     descricao: {
         type: String,
+        required: true,
     },
     usuario: {
         type: mongoose.Schema.Types.ObjectId,

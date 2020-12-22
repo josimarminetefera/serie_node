@@ -1,9 +1,8 @@
 const express = require("express");
 //MIDDLE PARA VALIDAR SE O USUÁRIO ESTÁ AUTENTICADO
 const autenticacao_middleware = require("../middlewares/autenticacao");
-const Projeto = require("../models/Projeto");
 
-const Produto = require("../models/Projeto");
+const Projeto = require("../models/Projeto");
 const Tarefa = require("../models/Tarefa");
 
 //ESTA ROTA AQUI É SÓ PARA PROJETO SÓ USADO AQUI DENTRO
@@ -14,7 +13,13 @@ rota.use(autenticacao_middleware);
 
 rota.get("/", async (req, res) => {
     //ESTE req.idUsuario É LA DO MIDDLEWARE 
-    return res.send({ ok: true, usuario: req.idUsuario });
+    //return res.send({ ok: true, usuario: req.idUsuario });
+    try {
+        const produtos = await Projeto.find();
+        return res.send({produtos});
+    } catch (erro) {
+        return res.status(400).send({ error: "Erro ao listar os produtos." });
+    }
 });
 
 rota.get("/:id", async (req, res) => {
