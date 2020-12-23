@@ -19,7 +19,7 @@ rota.get("/", async (req, res) => {
         //igerload é quando eu quero trazer o usuário de um projeto
         //se eu quero trazer o suário de todos projetos fazendo apenas uma consulta tem que usar o populate()
         //populate("usuario") serve para carregar de todos resultados o usuário
-        const produtos = await Projeto.find().populate("usuario");
+        const produtos = await Projeto.find().populate(["usuario", "tarefa"]);
         return res.send({ produtos });
     } catch (erro) {
         return res.status(400).send({ error: "Erro ao listar os projetos." });
