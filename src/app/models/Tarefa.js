@@ -9,21 +9,17 @@ const TarefaSchema = new mongoose.Schema({
     },
     descricao: {
         type: String,
-        required: true,
     },
     usuario: {
         type: mongoose.Schema.Types.ObjectId, //FORMA QUE O MONGO GRAVA O ID DENTRO DO BANCO
         ref: "Usuario",
-        required: true,
     },
     projeto: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Projeto",
-        required: true,
     },
     completa: {
         type: Boolean,
-        required: true,
         default: false,
     },
     data: {
