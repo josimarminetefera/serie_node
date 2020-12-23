@@ -46,7 +46,11 @@ rota.post("/", async (req, res) => {
         //...req.body INDICA QUE SERÃO ADICIONADOS VÁRIOS PARAMETROS
         //req.idUsuario vem la do middlewar
         //const projeto = await Projeto.create({ ...req.body, usuario: req.idUsuario });
-        const projeto = await Projeto.create({ titulo, descricao, usuario: req.idUsuario });
+        const projeto = await Projeto.create({
+            titulo,
+            descricao,
+            usuario: req.idUsuario
+        });
 
         //await Promise.all VAI ESPERAR GRAVAR CADA UMA DAS TAREFAS PRA SÓ DEPOIS CONTINUAR O SISTEMA
         await Promise.all(
@@ -74,7 +78,52 @@ rota.post("/", async (req, res) => {
 });
 
 rota.put("/:id", async (req, res) => {
-    return res.send({ ok: true, usuario: req.idUsuario });
+    try {
+        console.log(req.body);
+        console.log("ALTERAR UM PROJETO");
+        const { titulo, descricao, tarefa } = req.body;
+        //...req.body INDICA QUE SERÃO ADICIONADOS VÁRIOS PARAMETROS
+        //req.idUsuario vem la do middlewar
+        //const projeto = await Projeto.create({ ...req.body, usuario: req.idUsuario });
+        const projeto = await Projeto.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: {
+                    titulo,
+                    descricao,
+                }
+            },
+            { new: true }//PARA RETORNAR O PROJETO ATUALIZADO
+        );
+
+        //DELETAR TODAS TAREFAS ANTES DE FAZER ELAS NOVAMENTE
+        projeto.tarefa = [];
+        //DELETAR TODAS TAREFAS
+        await Tarefa.remove({ projeto: projeto._id });
+
+        //await Promise.all VAI ESPERAR GRAVAR CADA UMA DAS TAREFAS PRA SÓ DEPOIS CONTINUAR O SISTEMA
+        await Promise.all(
+            //TENHO QUE PERCORRER CADA UMA DAS TAREFAS PARA GUARDAR ELA DENTRO DO PROJETO
+            tarefa.map(async tarefa => {
+                //new Tarefa .save() CRIA A TAREFA PORÉM NÃO GRAVA NO MESMO MOMENTO IGUAL O Tarefa.create()
+                //...tarefa SIGNIFICA QUE ELE VAI PEGAR TODOS PARAMETROS QUE ESTÃO DENTRO
+                const projeto_tarefa = new Tarefa({ ...tarefa, projeto: projeto._id });
+
+                await projeto_tarefa.save();
+
+                //PEGO CADA TAREFA E ADICIONO DENTRO DO PROJETO
+                projeto.tarefa.push(projeto_tarefa);
+            })
+        );
+
+        //ISSO AQUI É PARA ATUALIZAR DEPOIS QUE EU ADICIONO AS TAREFAS
+        await projeto.save();
+
+        return res.send({ projeto });
+    } catch (erro) {
+        console.log(erro)
+        return res.status(400).send({ error: "Erro ao alterar novo projeto" })
+    }
 });
 
 //ROTA PARA DELETAR
