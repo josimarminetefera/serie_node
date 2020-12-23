@@ -99,7 +99,8 @@ rota.put("/:id", async (req, res) => {
         //DELETAR TODAS TAREFAS ANTES DE FAZER ELAS NOVAMENTE
         projeto.tarefa = [];
         //DELETAR TODAS TAREFAS
-        await Tarefa.remove({ projeto: projeto._id });
+        const resposta = await Tarefa.remove({ projeto: projeto._id });
+        console.log("total de itens removidos: " + resposta.deletedCount);
 
         //await Promise.all VAI ESPERAR GRAVAR CADA UMA DAS TAREFAS PRA SÓ DEPOIS CONTINUAR O SISTEMA
         await Promise.all(
