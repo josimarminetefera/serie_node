@@ -1,7 +1,10 @@
+console.log(".................")
+console.log("ProjetoController.js - INICIADO CONTRLLER PROJETO CONTROLLER");
 const express = require("express");
 //MIDDLE PARA VALIDAR SE O USUÁRIO ESTÁ AUTENTICADO
 const autenticacao_middleware = require("../middlewares/autenticacao");
 
+console.log("ProjetoController.js - CRIANDO MODELS");
 const Projeto = require("../models/Projeto");
 const Tarefa = require("../models/Tarefa");
 
@@ -13,6 +16,7 @@ rota.use(autenticacao_middleware);
 
 //ROTA PARA LISTAR 
 rota.get("/", async (req, res) => {
+    console.log("ProjetoController.js - INICIANDO GET PRINCIAPAL");
     //ESTE req.idUsuario É LA DO MIDDLEWARE 
     //return res.send({ ok: true, usuario: req.idUsuario });
     try {
@@ -28,6 +32,7 @@ rota.get("/", async (req, res) => {
 
 //ROTA PARA VISUALIZAR
 rota.get("/:id", async (req, res) => {
+    console.log("ProjetoController.js - INICIANDO GET COM O ID PRINCIAPAL");
     try {
         //req.params É PARA PEGAR OS PARAMETROS
         const projeto = await Projeto.findById(req.params.id).populate("usuario");
@@ -39,6 +44,7 @@ rota.get("/:id", async (req, res) => {
 
 //ROTA PARA CRIAR
 rota.post("/", async (req, res) => {
+    console.log("ProjetoController.js - INICIANDO POST PRINCIAPAL");
     try {
         console.log(req.body);
         console.log("CRIAR UM NOVO PROJETO");
@@ -78,6 +84,7 @@ rota.post("/", async (req, res) => {
 });
 
 rota.put("/:id", async (req, res) => {
+    console.log("ProjetoController.js - INICIANDO PUT COM ID PRINCIAPAL");
     try {
         console.log(req.body);
         console.log("ALTERAR UM PROJETO");
@@ -129,6 +136,7 @@ rota.put("/:id", async (req, res) => {
 
 //ROTA PARA DELETAR
 rota.delete("/:id", async (req, res) => {
+    console.log("ProjetoController.js - INICIANDO DELETE");
     try {
         await Projeto.findByIdAndRemove(req.params.id);
         return res.send();

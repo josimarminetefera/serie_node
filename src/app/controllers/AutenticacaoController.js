@@ -1,3 +1,5 @@
+console.log(".................")
+console.log("AutenticacaoController.js - INICIANDO AUTENTICACAO CONTROLLER");
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
@@ -6,6 +8,7 @@ const autenticacao_configuracao = require("../../configs/autenticacao.json");
 const crypto = require("crypto");
 const mailer = require("../../modules/mailer")
 
+console.log("AutenticacaoController.js - CRIANDO MODELS");
 //BUSCAR A CLASS USUARIO
 const Usuario = require("../models/Usuario");
 //const { userInfo } = require("os"); não foi eu quem fiz
@@ -14,6 +17,7 @@ const Usuario = require("../models/Usuario");
 const rota = express.Router();
 
 function gerarToken(params = {}) {
+    console.log("AutenticacaoController.js - FUNCAO gerarToken");
     //sign(valor sempre fixo id, hash unico no app, {quanto tempo ele expira})
     //INFORMAÇÃO QUE VAI SER UNICA PARA O USUARIO ID EU USO PARA O TOKEN
     return jsonwebtoken.sign(params, autenticacao_configuracao.key, {
@@ -22,6 +26,7 @@ function gerarToken(params = {}) {
 }
 
 rota.post("/registrar", async (req, res) => {
+    console.log("AutenticacaoController.js - FUNCAO /registrar");
     try {
         //{ email } ISSO AQUI PEGA UM VALOR DENTRO DO body
         const { email } = req.body;
@@ -45,6 +50,7 @@ rota.post("/registrar", async (req, res) => {
 });
 
 rota.post('/autenticar', async (req, res) => {
+    console.log("AutenticacaoController.js - FUNCAO /autenticar");
     //VOU RECEBER ESTAS DUAS VARIAVEIS PARA LOGIN
     const { email, senha } = req.body;
 
@@ -72,6 +78,7 @@ rota.post('/autenticar', async (req, res) => {
 
 //ESQUECI MINHA SENHA
 rota.post("/esqueci_minha_senha", async (req, res) => {
+    console.log("AutenticacaoController.js - FUNCAO /esqueci_minha_senha");
     console.log("esqueci_minha_senha");
     try {
         const { email } = req.body;
@@ -122,6 +129,7 @@ rota.post("/esqueci_minha_senha", async (req, res) => {
 });
 
 rota.post("/resetar_senha", async (req, res) => {
+    console.log("AutenticacaoController.js - FUNCAO /resetar_senha");
     console.log("resetar_senha");
     try {
         const { email, token, senha } = req.body;

@@ -1,3 +1,4 @@
+console.log("models Projeto.js - INICIADO MODEL PROJETO");
 const mongoose = require("../../database/banco");
 const bcryptjs = require("bcryptjs");
 

@@ -1,3 +1,4 @@
+console.log("controller/index.js - INICIANDO TODOS CONTROLLERS QUE TEM NA PASTA.....");
 const fs = require("fs");
 const path = require("path");
 

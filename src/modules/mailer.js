@@ -1,3 +1,4 @@
+console.log("modules mailer.js - INICIADO MAILLER");
 const nodemailer = require("nodemailer");
 const nodemailer_express_handlebars = require("nodemailer-express-handlebars");
 const path = require("path");

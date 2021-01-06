@@ -1,3 +1,4 @@
+console.log("index.js - INICIANDO SERVICOS");
 const express = require("express");
 //PARA TRATAR REQUISIÇÃO EM JSON E PEGAR OS PARÂMETROS
 const body_parser = require("body-parser");
@@ -21,6 +22,7 @@ app.use(body_parser.urlencoded({ extended: false }));
 //(app) SÓ PODE SER DEFINIDO UMA VEZ E VAI PARA TODOS OS OUTROS ARQUIVOS
 //require("./controllers/AutenticacaoController")(app);
 //require("./controllers/ProjetoController")(app);
+console.log("index.js - INICIANDO CONTROLLERS");
 require("./app/controllers/index")(app);
 
 //QUAL PORTA O APLICATIVO VAI ESCUTAR 

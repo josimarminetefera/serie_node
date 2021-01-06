@@ -1,3 +1,4 @@
+console.log("database banco.js - INICIADO BANCO DE DADOS");
 const mongoose = require("mongoose");
 
 //INDICA QUAL A CLASSE DE PROMISE QUE O MONGOOSE VAI USAR 
